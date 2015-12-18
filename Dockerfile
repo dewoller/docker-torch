@@ -55,14 +55,25 @@ RUN git clone https://github.com/twitter/torch-autograd.git /tmp/torch-autograd 
 # Install CSV parser
 RUN luarocks install csv
 
+# Install FFmpeg and Lua bindings
 RUN echo "deb http://ppa.launchpad.net/kirillshkrogalev/ffmpeg-next/ubuntu trusty main" \
     > /etc/apt/sources.list.d/ffmpeg.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8EFE5982
-
 RUN apt-get update \
-    && apt-get install -y ffmpeg
-
-RUN luarocks install ffmpeg
+    && apt-get install -y \
+    cpp \
+    libavformat-ffmpeg-dev \
+    libavcodec-ffmpeg-dev \
+    libavutil-ffmpeg-dev \
+    libavfilter-ffmpeg-dev
+RUN apt-get update && apt-get install -y zip
+ENV FFMPEG_FFI_COMMIT=582c89223c1c0643678c3bce7c2960b2870efe89
+RUN git clone https://github.com/anibali/lua-ffmpeg-ffi.git /tmp/lua-ffmpeg-ffi \
+    && cd /tmp/lua-ffmpeg-ffi \
+    && git checkout "$FFMPEG_FFI_COMMIT" \
+    && luarocks pack rockspecs/ffmpeg-ffi-scm-0.rockspec \
+    && luarocks install ffmpeg-ffi-scm-0.src.rock \
+    && rm -rf /tmp/lua-ffmpeg-ffi
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
