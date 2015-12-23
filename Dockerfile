@@ -67,7 +67,7 @@ RUN apt-get update \
     libavutil-ffmpeg-dev \
     libavfilter-ffmpeg-dev
 RUN apt-get update && apt-get install -y zip
-ENV FFMPEG_FFI_COMMIT=582c89223c1c0643678c3bce7c2960b2870efe89
+ENV FFMPEG_FFI_COMMIT=767d66cf75d3d898fa2ed613f7759a3cf6a421f6
 RUN git clone https://github.com/anibali/lua-ffmpeg-ffi.git /tmp/lua-ffmpeg-ffi \
     && cd /tmp/lua-ffmpeg-ffi \
     && git checkout "$FFMPEG_FFI_COMMIT" \
