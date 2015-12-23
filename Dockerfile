@@ -72,7 +72,7 @@ RUN git clone https://github.com/anibali/torchvid.git /tmp/torchvid \
     && cd /tmp/torchvid \
     && git checkout "$TORCHVID_COMMIT" \
     && luarocks make rockspecs/torchvid-scm-0.rockspec \
-    && rm -rf /tmp/lua-ffmpeg-ffi
+    && rm -rf /tmp/torchvid
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
