@@ -66,13 +66,12 @@ RUN apt-get update \
     libavcodec-ffmpeg-dev \
     libavutil-ffmpeg-dev \
     libavfilter-ffmpeg-dev
-RUN apt-get update && apt-get install -y zip
-ENV FFMPEG_FFI_COMMIT=767d66cf75d3d898fa2ed613f7759a3cf6a421f6
-RUN git clone https://github.com/anibali/lua-ffmpeg-ffi.git /tmp/lua-ffmpeg-ffi \
-    && cd /tmp/lua-ffmpeg-ffi \
-    && git checkout "$FFMPEG_FFI_COMMIT" \
-    && luarocks pack rockspecs/ffmpeg-ffi-scm-0.rockspec \
-    && luarocks install ffmpeg-ffi-scm-0.src.rock \
+RUN apt-get update && apt-get install -y pkg-config
+ENV TORCHVID_COMMIT=94d55b0a5df545a71ad05ba392c305275e6df7b6
+RUN git clone https://github.com/anibali/torchvid.git /tmp/torchvid \
+    && cd /tmp/torchvid \
+    && git checkout "$TORCHVID_COMMIT" \
+    && luarocks make rockspecs/torchvid-scm-0.rockspec \
     && rm -rf /tmp/lua-ffmpeg-ffi
 
 # Clean up
