@@ -176,6 +176,19 @@ RUN apt-get update \
 # Layer-wise learning rate module
 RUN luarocks install nnlr
 
+# object oriented framework module
+RUN luarocks install dp
+
+# pretty print
+RUN luarocks install pprint
+
+# regular expression library
+RUN luarocks install lrexlib-PCRE PCRE_DIR=/usr/lib/x86_64-linux-gnu/ PCRE_INCDIR=/usr/include PCRE_LIBDIR=/usr/lib/x86_64-linux-gnu
+
+# install fb library
+ADD install_fb_stuff.sh /tmp/install_fb_stuff.sh 
+RUN bash -x -v /tmp/install_fb_stuff.sh
+
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
